@@ -22,13 +22,13 @@ jobs:
         with:
           java-version: '21'
           distribution: 'temurin'
-          cache: 'maven'
-          server-id: github
-          server-username: GITHUB_ACTOR
-          server-password: GITHUB_TOKEN
+          cache: 'gradle'
 
-      - name: Build and publish
+      - name: Grant execute permission for Gradle Wrapper
+        run: chmod +x gradlew
+
+      - name: Publish to GitHub Packages (Gradle)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          mvn -B -DskipTests deploy
+          GITHUB_ACTOR: ${{ github.actor }}
+        run: ./gradlew publish
