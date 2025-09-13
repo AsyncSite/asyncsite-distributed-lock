@@ -27,15 +27,6 @@ jobs:
       - name: Grant execute permission for Gradle Wrapper
         run: chmod +x gradlew
 
-      - name: Prepare Gradle wrapper (download wrapper jar)
-        env:
-          GRADLE_VER: 8.10.2
-        run: |
-          mkdir -p gradle/wrapper
-          curl -sL -o gradle.zip https://services.gradle.org/distributions/gradle-${GRADLE_VER}-bin.zip
-          unzip -p gradle.zip "gradle-${GRADLE_VER}/lib/plugins/gradle-wrapper-*.jar" > gradle/wrapper/gradle-wrapper.jar
-          echo "distributionUrl=https\\://services.gradle.org/distributions/gradle-${GRADLE_VER}-bin.zip" > gradle/wrapper/gradle-wrapper.properties
-
       - name: Publish to GitHub Packages (Gradle)
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
